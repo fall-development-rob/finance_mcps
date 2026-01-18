@@ -1,18 +1,30 @@
+// Core infrastructure
+pub mod core;
+pub mod error;
+pub mod types;
+
 // Phase 1 modules
 pub mod wacc;
 pub mod credit_metrics;
 pub mod dcf;
 pub mod debt_capacity;
 pub mod covenant;
-pub mod error;
-pub mod types;
 
 // Phase 2 modules
 pub mod fundamentals;
 pub mod valuation;
 
+// Phase 3 modules
+pub mod pe;
+
 pub use error::FinanceError;
 pub use types::*;
+
+// Re-export core utilities
+pub use core::{
+    calculate_npv, calculate_irr, calculate_xirr, calculate_moic,
+    solve_circular, solve_circular_newton,
+};
 
 // Re-export Phase 1 functions
 pub use wacc::calculate_wacc;
@@ -27,8 +39,18 @@ pub use fundamentals::{
     equity_enterprise_bridge,
     calculate_diluted_shares,
     analyze_accounting_flow,
+    build_sources_and_uses,
+    SourcesAndUsesInput,
+    SourcesAndUsesOutput,
 };
 pub use valuation::{
     create_football_field,
     calculate_paper_lbo,
+};
+
+// Re-export Phase 3 functions
+pub use pe::{
+    calculate_value_bridge,
+    ValueBridgeInput,
+    ValueBridgeOutput,
 };
