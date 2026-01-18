@@ -1,0 +1,79 @@
+{
+  "name": "corp-finance-mcp-hivemind",
+  "version": "0.1.0",
+  "description": "Orchestrated build system for Corp Finance MCP",
+  "swarms": {
+    "rust-core": {
+      "name": "Rust Core Build Swarm",
+      "priority": 1,
+      "tasks": [
+        {
+          "name": "compile-rust-core",
+          "command": "cargo build --release --package corp-finance-core",
+          "cwd": ".",
+          "dependencies": []
+        },
+        {
+          "name": "test-rust-core",
+          "command": "cargo test --package corp-finance-core",
+          "cwd": ".",
+          "dependencies": ["compile-rust-core"]
+        }
+      ]
+    },
+    "bindings": {
+      "name": "NAPI Bindings Build Swarm",
+      "priority": 2,
+      "tasks": [
+        {
+          "name": "install-bindings-deps",
+          "command": "npm install",
+          "cwd": "packages/bindings",
+          "dependencies": ["test-rust-core"]
+        },
+        {
+          "name": "build-bindings",
+          "command": "npm run build",
+          "cwd": "packages/bindings",
+          "dependencies": ["install-bindings-deps"]
+        }
+      ]
+    },
+    "mcp-server": {
+      "name": "TypeScript MCP Server Build Swarm",
+      "priority": 3,
+      "tasks": [
+        {
+          "name": "install-mcp-deps",
+          "command": "npm install",
+          "cwd": "packages/mcp-server",
+          "dependencies": ["build-bindings"]
+        },
+        {
+          "name": "build-mcp-server",
+          "command": "npm run build",
+          "cwd": "packages/mcp-server",
+          "dependencies": ["install-mcp-deps"]
+        }
+      ]
+    },
+    "integration": {
+      "name": "Integration Test Swarm",
+      "priority": 4,
+      "tasks": [
+        {
+          "name": "verify-build",
+          "command": "node -e \"console.log('Build verification complete')\"",
+          "cwd": ".",
+          "dependencies": ["build-mcp-server"]
+        }
+      ]
+    }
+  },
+  "execution": {
+    "mode": "parallel-swarms",
+    "maxConcurrency": 4,
+    "continueOnError": false,
+    "retries": 2
+  }
+}

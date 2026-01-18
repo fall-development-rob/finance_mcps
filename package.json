@@ -1,0 +1,26 @@
+{
+  "name": "corp-finance-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Corporate Finance MCP Server - Rust/TypeScript Stack",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build:rust && npm run build:bindings && npm run build:mcp",
+    "build:rust": "cargo build --release",
+    "build:bindings": "npm run build --workspace=@corp-finance/bindings",
+    "build:mcp": "npm run build --workspace=@corp-finance/mcp-server",
+    "dev": "npm run dev --workspace=@corp-finance/mcp-server",
+    "test": "cargo test && npm run test --workspaces",
+    "clean": "cargo clean && npm run clean --workspaces"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3"
+  }
+}
