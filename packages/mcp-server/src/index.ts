@@ -12,6 +12,11 @@ import {
   handleDcfModel,
   handleDebtCapacity,
   handleCovenantCompliance,
+  handleCalculateNpv,
+  handleCalculateIrr,
+  handleCalculateMoic,
+  handleSourcesAndUses,
+  handleValueBridge,
 } from './tools.js';
 import {
   handleThreeStatementModel,
@@ -22,6 +27,7 @@ import {
   handlePaperLbo,
 } from './tools-phase2.js';
 import { PHASE2_TOOLS } from './tool-definitions-phase2.js';
+import { PHASE3_TOOLS } from './tool-definitions-phase3.js';
 
 // Tool definitions (Phase 1)
 const PHASE1_TOOLS = [
@@ -184,13 +190,13 @@ const PHASE1_TOOLS = [
 ];
 
 // Combine all tools
-const ALL_TOOLS = [...PHASE1_TOOLS, ...PHASE2_TOOLS];
+const ALL_TOOLS = [...PHASE1_TOOLS, ...PHASE2_TOOLS, ...PHASE3_TOOLS];
 
 // Create server instance
 const server = new Server(
   {
     name: 'corp-finance-mcp',
-    version: '0.2.0',  // Updated to Phase 2
+    version: '0.3.0',  // Updated to Phase 3
   },
   {
     capabilities: {
@@ -234,6 +240,18 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       return await handleFootballField(args);
     case 'paper_lbo':
       return await handlePaperLbo(args);
+
+    // Phase 3 tools
+    case 'calculate_npv':
+      return await handleCalculateNpv(args);
+    case 'calculate_irr':
+      return await handleCalculateIrr(args);
+    case 'calculate_moic':
+      return await handleCalculateMoic(args);
+    case 'sources_and_uses':
+      return await handleSourcesAndUses(args);
+    case 'value_bridge':
+      return await handleValueBridge(args);
 
     default:
       throw new Error(`Unknown tool: ${name}`);

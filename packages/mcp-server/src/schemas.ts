@@ -127,6 +127,58 @@ export const PaperLboInputSchema = z.object({
   interest_rate: z.string().or(z.number()),
 });
 
+// ========== Phase 3 Schemas ==========
+
+export const NpvInputSchema = z.object({
+  cash_flows: z.array(z.string().or(z.number())),
+  discount_rate: z.string().or(z.number()),
+});
+
+export const IrrInputSchema = z.object({
+  cash_flows: z.array(z.string().or(z.number())),
+  initial_guess: z.string().or(z.number()).optional(),
+});
+
+export const MoicInputSchema = z.object({
+  invested_capital: z.string().or(z.number()),
+  realized_value: z.string().or(z.number()),
+});
+
+export const SourceItemSchema = z.object({
+  name: z.string(),
+  amount: z.string().or(z.number()),
+  pct_of_total: z.string().or(z.number()).optional(),
+});
+
+export const UseItemSchema = z.object({
+  name: z.string(),
+  amount: z.string().or(z.number()),
+  pct_of_total: z.string().or(z.number()).optional(),
+});
+
+export const SourcesAndUsesInputSchema = z.object({
+  senior_debt: z.string().or(z.number()),
+  subordinated_debt: z.string().or(z.number()),
+  equity_contribution: z.string().or(z.number()),
+  rollover_equity: z.string().or(z.number()),
+  seller_note: z.string().or(z.number()).optional(),
+  other_sources: z.array(SourceItemSchema).default([]),
+  purchase_equity_value: z.string().or(z.number()),
+  refinanced_debt: z.string().or(z.number()),
+  transaction_fees: z.string().or(z.number()),
+  financing_fees: z.string().or(z.number()),
+  other_uses: z.array(UseItemSchema).default([]),
+});
+
+export const ValueBridgeInputSchema = z.object({
+  entry_ebitda: z.string().or(z.number()),
+  entry_multiple: z.string().or(z.number()),
+  entry_net_debt: z.string().or(z.number()),
+  exit_ebitda: z.string().or(z.number()),
+  exit_multiple: z.string().or(z.number()),
+  exit_net_debt: z.string().or(z.number()),
+});
+
 // Type exports for TypeScript
 export type WaccInput = z.infer<typeof WaccInputSchema>;
 export type CreditMetricsInput = z.infer<typeof CreditMetricsInputSchema>;
@@ -140,3 +192,9 @@ export type DilutedSharesInput = z.infer<typeof DilutedSharesInputSchema>;
 export type AccountingFlowInput = z.infer<typeof AccountingFlowInputSchema>;
 export type FootballFieldInput = z.infer<typeof FootballFieldInputSchema>;
 export type PaperLboInput = z.infer<typeof PaperLboInputSchema>;
+
+export type NpvInput = z.infer<typeof NpvInputSchema>;
+export type IrrInput = z.infer<typeof IrrInputSchema>;
+export type MoicInput = z.infer<typeof MoicInputSchema>;
+export type SourcesAndUsesInput = z.infer<typeof SourcesAndUsesInputSchema>;
+export type ValueBridgeInput = z.infer<typeof ValueBridgeInputSchema>;
