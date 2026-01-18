@@ -13,9 +13,18 @@ import {
   handleDebtCapacity,
   handleCovenantCompliance,
 } from './tools.js';
+import {
+  handleThreeStatementModel,
+  handleEquityEnterpriseBridge,
+  handleDilutedShares,
+  handleAccountingFlow,
+  handleFootballField,
+  handlePaperLbo,
+} from './tools-phase2.js';
+import { PHASE2_TOOLS } from './tool-definitions-phase2.js';
 
-// Tool definitions
-const TOOLS = [
+// Tool definitions (Phase 1)
+const PHASE1_TOOLS = [
   {
     name: 'wacc_calculator',
     description: 'Calculate Weighted Average Cost of Capital (WACC) for corporate valuation',
@@ -174,11 +183,14 @@ const TOOLS = [
   },
 ];
 
+// Combine all tools
+const ALL_TOOLS = [...PHASE1_TOOLS, ...PHASE2_TOOLS];
+
 // Create server instance
 const server = new Server(
   {
     name: 'corp-finance-mcp',
-    version: '0.1.0',
+    version: '0.2.0',  // Updated to Phase 2
   },
   {
     capabilities: {
@@ -189,7 +201,7 @@ const server = new Server(
 
 // Register tool list handler
 server.setRequestHandler(ListToolsRequestSchema, async () => ({
-  tools: TOOLS,
+  tools: ALL_TOOLS,
 }));
 
 // Register tool call handler
@@ -197,6 +209,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
 
   switch (name) {
+    // Phase 1 tools
     case 'wacc_calculator':
       return await handleWaccCalculator(args);
     case 'credit_metrics':
@@ -207,6 +220,21 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       return await handleDebtCapacity(args);
     case 'covenant_compliance':
       return await handleCovenantCompliance(args);
+
+    // Phase 2 tools
+    case 'three_statement_model':
+      return await handleThreeStatementModel(args);
+    case 'equity_enterprise_bridge':
+      return await handleEquityEnterpriseBridge(args);
+    case 'diluted_shares':
+      return await handleDilutedShares(args);
+    case 'accounting_flow':
+      return await handleAccountingFlow(args);
+    case 'football_field':
+      return await handleFootballField(args);
+    case 'paper_lbo':
+      return await handlePaperLbo(args);
+
     default:
       throw new Error(`Unknown tool: ${name}`);
   }

@@ -40,7 +40,15 @@ corp-finance-mcp/
 │       │   ├── credit_metrics.rs  # Credit analysis
 │       │   ├── dcf.rs         # DCF model
 │       │   ├── debt_capacity.rs   # Debt capacity analysis
-│       │   └── covenant.rs    # Covenant compliance
+│       │   ├── covenant.rs    # Covenant compliance
+│       │   ├── fundamentals/  # Phase 2: Fundamentals
+│       │   │   ├── three_statement_model.rs
+│       │   │   ├── equity_enterprise_bridge.rs
+│       │   │   ├── diluted_shares.rs
+│       │   │   └── accounting_flows.rs
+│       │   └── valuation/     # Phase 2: Valuation
+│       │       ├── football_field.rs
+│       │       └── paper_lbo.rs
 │       └── Cargo.toml
 ├── packages/
 │   ├── bindings/              # napi-rs to expose Rust to Node
@@ -56,13 +64,25 @@ corp-finance-mcp/
 └── package.json               # npm workspace root
 ```
 
-## Phase 1 Tools
+## Phase 1 Tools (Valuation & Analysis)
 
 1. **wacc_calculator** - Calculate Weighted Average Cost of Capital
 2. **credit_metrics** - Analyze credit metrics (leverage, coverage ratios)
 3. **dcf_model** - Discounted Cash Flow valuation
 4. **debt_capacity** - Calculate debt capacity based on EBITDA multiples
 5. **covenant_compliance** - Check debt covenant compliance
+
+## Phase 2 Tools (Fundamentals & Advanced Valuation)
+
+### Fundamentals
+6. **three_statement_model** - Build linked Income Statement, Balance Sheet, and Cash Flow projections
+7. **equity_enterprise_bridge** - Convert between Equity Value and Enterprise Value with bridge items
+8. **diluted_shares** - Calculate fully diluted shares using treasury stock method (options, RSUs, convertibles)
+9. **accounting_flow** - Analyze transaction impact across all three financial statements ("walk me through" questions)
+
+### Valuation
+10. **football_field** - Create valuation range summary across DCF, Comps, and Precedents
+11. **paper_lbo** - Quick mental math LBO analysis with IRR calculation
 
 ## Data Flow
 
