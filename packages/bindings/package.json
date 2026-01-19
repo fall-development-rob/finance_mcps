@@ -18,8 +18,8 @@
     }
   },
   "scripts": {
-    "build": "napi build --platform --release --cargo-cwd ../../",
-    "build:debug": "napi build --platform --cargo-cwd ../../",
+    "build": "napi build --platform --release",
+    "build:debug": "napi build --platform",
     "prepublishOnly": "napi prepublish -t npm",
     "artifacts": "napi artifacts",
     "version": "napi version"
@@ -32,5 +32,19 @@
   },
   "engines": {
     "node": ">= 18"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fall-development-rob/finance_mcps.git",
+    "directory": "packages/bindings"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "public"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "*.node"
+  ]
 }

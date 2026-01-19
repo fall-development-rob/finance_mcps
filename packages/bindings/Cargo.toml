@@ -10,7 +10,11 @@ crate-type = ["cdylib"]
 corp-finance-core = { path = "../../crates/corp-finance-core" }
 napi = { version = "2", features = ["serde-json"] }
 napi-derive = "2"
+serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
+rust_decimal = { version = "1.36", features = ["serde-with-str"] }
+rust_decimal_macros = "1.36"
+chrono = { version = "0.4", features = ["serde"] }
 
 [build-dependencies]
 napi-build = "2"

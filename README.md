@@ -193,3 +193,63 @@ npm run build
 ## License
 
 MIT
+
+## Publishing & Releases
+
+### Automated Publishing
+
+This project uses [Changesets](https://github.com/changesets/changesets) for version management and automated releases to GitHub Package Registry.
+
+#### Creating a Release
+
+1. **Create a changeset** after making changes:
+```bash
+npm run changeset
+```
+
+2. **Commit the changeset**:
+```bash
+git add .changeset
+git commit -m "chore: add changeset for feature X"
+```
+
+3. **Merge to main**: When your PR is merged, GitHub Actions will:
+   - Create a "Version Packages" PR with updated versions and CHANGELOG
+   - When that PR is merged, automatically publish to GitHub Package Registry
+   - Create a GitHub Release with full changelog
+
+#### Manual Publishing
+
+```bash
+# Build all packages
+npm run build
+
+# Publish to GitHub Package Registry
+npm run release
+```
+
+### Installing from GitHub Packages
+
+1. **Configure npm** to use GitHub Package Registry:
+```bash
+echo "@corp-finance:registry=https://npm.pkg.github.com" >> .npmrc
+```
+
+2. **Authenticate** (requires GitHub token with `read:packages`):
+```bash
+echo "//npm.pkg.github.com/:_authToken=YOUR_TOKEN" >> .npmrc
+```
+
+3. **Install**:
+```bash
+npm install @corp-finance/mcp-server
+```
+
+### CI/CD Workflows
+
+- **CI**: Runs tests and builds on every PR
+- **Release**: Creates version PRs when changesets are merged
+- **Publish**: Publishes packages when releases are created
+
+See [.github/workflows/README.md](.github/workflows/README.md) for details.
+

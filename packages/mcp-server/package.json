@@ -25,5 +25,28 @@
   },
   "engines": {
     "node": ">=18.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fall-development-rob/finance_mcps.git",
+    "directory": "packages/mcp-server"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "public"
+  },
+  "files": [
+    "dist/**/*",
+    "package.json",
+    "README.md"
+  ],
+  "keywords": [
+    "mcp",
+    "finance",
+    "corporate-finance",
+    "valuation",
+    "lbo",
+    "pe",
+    "investment-banking"
+  ]
 }
